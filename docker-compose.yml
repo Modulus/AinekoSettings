@@ -7,13 +7,13 @@ services:
       - "5432:5432"
     environment:
       POSTGRES_PASSWORD: neverever
-    networks:
-      - aineko_settings_network
-  app:
-    build: .
-    container_name: aineko_settings
-    networks:
-      - aineko_settings_network
-networks:
-  aineko_settings_network:
-    driver: bridge
+  #  networks:
+   #   - aineko_settings_network
+  #app:
+  #  build: .
+   # container_name: aineko_settings
+    #networks:
+     # - aineko_settings_network
+#networks:
+#  aineko_settings_network:
+#    driver: bridge
