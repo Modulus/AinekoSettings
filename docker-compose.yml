@@ -1,0 +1,19 @@
+version: "3.3"
+services:
+  postgres:
+    image: postgres:10.4
+    container_name: aineko_postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: neverever
+    networks:
+      - aineko_settings_network
+  app:
+    build: .
+    container_name: aineko_settings
+    networks:
+      - aineko_settings_network
+networks:
+  aineko_settings_network:
+    driver: bridge

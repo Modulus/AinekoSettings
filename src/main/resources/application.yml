@@ -1,0 +1,31 @@
+spring.boot.enableautoconfiguration: true
+environment: default
+# logging
+
+logging.pattern.console: %d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n
+
+logging.level.org.hibernate.SQL: debug
+
+
+## Spring DATASOURCE (DataSourceAutoConfiguration & DataSourceProperties)
+spring.datasource.url: jdbc:postgresql://postgres:5432/aineko
+spring.datasource.username: postgres
+spring.datasource.password: neverever
+
+# The SQL dialect makes Hibernate generate better SQL for the chosen database
+spring.jpa.properties.hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+
+# Hibernate ddl auto (create, create-drop, validate, update)
+spring.jpa.hibernate.ddl-auto: create-drop
+
+---
+spring.profiles: docker
+name: docker
+environment: docker
+pring.datasource.url: jdbc:postgresql://aineko_postgres:5432/aineko
+
+---
+spring.profiles: compose
+name: compose
+environment: compose
+pring.datasource.url: jdbc:postgresql://postgres:5432/aineko
