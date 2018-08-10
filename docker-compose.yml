@@ -18,6 +18,8 @@ services:
       - aineko_settings_network
     environment:
       profile: compose
+    ports:
+      - "8080:8080"
 
 networks:
   aineko_settings_network:

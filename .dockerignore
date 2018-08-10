@@ -1,0 +1,6 @@
+.gradle
+.idea
+out
+Dockerfile
+docker-compose.yml
+.bash_history

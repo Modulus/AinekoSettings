@@ -9,7 +9,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -24,13 +27,16 @@ public class SitesController {
 
     @RequestMapping(value = "/site", method = RequestMethod.GET)
     public List<Site> greeting(@RequestParam(value="name", defaultValue="World") String name) {
-        return Collections.emptyList();
+        return siteRepository.findAll();
     }
 
     @RequestMapping(value = "/site", method = RequestMethod.PUT)
     public Site save(@RequestParam(value = "url") String url){
         Site site = new Site();
         site.setUrl(url);
-        return site;
+
+        site.setCreatedAt(new Date());
+        site.setUpdatedAt(site.getCreatedAt());
+        return siteRepository.save(site);
     }
 }

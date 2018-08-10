@@ -1,6 +1,6 @@
-﻿-- Database: settings
+﻿-- Database: aineko
 
--- DROP DATABASE settings;
+-- DROP DATABASE aineko;
 
 CREATE DATABASE aineko
   WITH OWNER = postgres
