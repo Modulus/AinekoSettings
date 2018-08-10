@@ -6,14 +6,19 @@ services:
     ports:
       - "5432:5432"
     environment:
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: neverever
-  #  networks:
-   #   - aineko_settings_network
-  #app:
-  #  build: .
-   # container_name: aineko_settings
-    #networks:
-     # - aineko_settings_network
-#networks:
-#  aineko_settings_network:
-#    driver: bridge
+      POSTGRES_DB: aineko
+    networks:
+      - aineko_settings_network
+  app:
+    build: .
+    container_name: aineko_settings
+    networks:
+      - aineko_settings_network
+    environment:
+      profile: compose
+
+networks:
+  aineko_settings_network:
+    driver: bridge

@@ -13,8 +13,8 @@ CREATE DATABASE aineko
 COMMENT ON DATABASE aineko
   IS 'is database for storing settings for aineko agent';
 
-create table settings (
-	id serial PRIMARY KEY,
-	website VARCHAR (255) UNIQUE NOT NULL,
-	added TIMESTAMP NOT NULL
-);
+'create table settings (
+'	id serial PRIMARY KEY,
+'	website VARCHAR (255) UNIQUE NOT NULL,
+'	added TIMESTAMP NOT NULL
+');

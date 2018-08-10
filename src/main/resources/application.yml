@@ -1,5 +1,6 @@
 #spring.boot.enableautoconfiguration: true
 environment: default
+spring.profiles: default
 # logging
 
 logging.pattern.console: "%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n"
@@ -10,7 +11,7 @@ logging.level.org.hibernate.SQL: debug
 ## Spring DATASOURCE (DataSourceAutoConfiguration & DataSourceProperties)
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/aineko
+    url: jdbc:postgresql://localhost:5432/aineko?createDatabaseIfNotExist=true&useUnicode=yes&characterEncoding=UTF-8
     username: postgres
     password: neverever
   # The SQL dialect makes Hibernate generate better SQL for the chosen database
@@ -33,10 +34,20 @@ spring:
 spring.profiles: docker
 name: docker
 environment: docker
-spring.datasource.url: jdbc:postgresql://aineko_postgres:5432/aineko
+spring.datasource.url: jdbc:postgresql://aineko_postgres:5432/aineko?createDatabaseIfNotExist=true&useUnicode=yes&characterEncoding=UTF-8
 
 ---
-spring.profiles: compose
 name: compose
 environment: compose
-spring.datasource.url: jdbc:postgresql://postgres:5432/aineko
+spring:
+  profiles: compose
+  datasource:
+    url: jdbc:postgresql://postgres:5432/aineko
+    username: postgres
+    password: neverever
+hibernate.hbm2ddl.auto: drop-create
+---
+spring.profiles: production
+name: production
+environment: production
+spring.datasource.url: jdbc:postgresql://settings_db:5432/aineko
