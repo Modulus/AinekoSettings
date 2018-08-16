@@ -16,6 +16,7 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+//apply plugin: 'idea'
 //apply plugin: 'net.ltgt.apt'
 
 
@@ -49,3 +50,30 @@ dependencies {
 springBoot {
     mainClassName = 'com.aineko.settings.SettingsApplication'
 }
+
+
+sourceSets {
+	itest {
+		compileClasspath += sourceSets.main.output + configurations.testCompile
+		runtimeClasspath += output + compileClasspath + configurations.testRuntime
+	}
+}
+
+//idea {
+//	module {
+//		testSourceDirs += sourceSets.integrationTest.java.srcDirs
+//		testResourceDirs += sourceSets.integrationTest.resources.srcDirs
+//		scopes.TEST.plus += [ configurations.integrationTestCompile ]
+//	}
+//}
+
+task verify(type: Test) {
+	description = 'Runs the integration tests.'
+	group = 'verification'
+	testClassesDirs = sourceSets.itest.output.classesDirs
+	classpath = sourceSets.itest.runtimeClasspath
+	outputs.upToDateWhen { false }
+	mustRunAfter test
+}
+
+check.dependsOn verify
