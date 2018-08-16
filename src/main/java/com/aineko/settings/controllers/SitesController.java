@@ -4,11 +4,9 @@ package com.aineko.settings.controllers;
 import com.aineko.settings.entities.Site;
 import com.aineko.settings.repositories.SiteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.xml.ws.Response;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -38,5 +36,11 @@ public class SitesController {
         site.setCreatedAt(new Date());
         site.setUpdatedAt(site.getCreatedAt());
         return siteRepository.save(site);
+    }
+
+    @RequestMapping(value = "/site", method=RequestMethod.DELETE)
+    public void delete(@RequestParam(value="id") Long id){
+        siteRepository.deleteById(id);
+
     }
 }
