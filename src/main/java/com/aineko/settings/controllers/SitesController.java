@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class SitesController {
@@ -41,6 +42,18 @@ public class SitesController {
     @RequestMapping(value = "/site", method=RequestMethod.DELETE)
     public void delete(@RequestParam(value="id") Long id){
         siteRepository.deleteById(id);
+    }
+
+    @RequestMapping(value = "/site", method = RequestMethod.PATCH)
+    public Site update(@RequestParam(value = "url") String url, @RequestParam(value = "id") Long id){
+        Optional<Site> optionalSite = siteRepository.findById(id);
+        if (optionalSite.isPresent()){
+            Site site = optionalSite.get();
+            site.setUrl(url);
+            site.setUpdatedAt(new Date());
+            return siteRepository.save(site);
+        }
+        return null;
 
     }
 }

@@ -43,7 +43,7 @@ public class SitesControllerTests {
     }
 
     @Test
-    public void site_saveNewSite_ShouldBeAbleToFindThisAndDeleteIt(){
+    public void site_crud_AllOperationsWorks(){
         String url = "http://www.vg.no";
         Response response =  when()
                 .put("/site?url={url}", url)
@@ -56,6 +56,16 @@ public class SitesControllerTests {
 
         // Delete with the newly created id should be ok
         Integer id = response.path("id");
+        String newUrl = "http://ba.no";
+        when()
+                .patch("/site?url={url}&id={id}", newUrl, id)
+                .then()
+                .body("id", equalTo(id))
+                .body("url", equalTo(newUrl))
+                .statusCode(200);
+
+
+
         when()
                 .delete("/site?id={id}", id)
                 .then()
