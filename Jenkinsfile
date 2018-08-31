@@ -15,7 +15,9 @@ podTemplate(label: label, containers : [
         stage('Run tests') {
             container("gradle"){
                 sh """
-                gradle test 
+                ls -la
+                cp `pwd` /home/gradle/project
+                cd /home/gradle/project && gradle test 
                 """
             }
         }
