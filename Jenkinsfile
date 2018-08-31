@@ -1,8 +1,8 @@
 // this guarantees the node will use this template
 def label = "mypod-${UUID.randomUUID().toString()}"
 podTemplate(label: label, containers : [
-    containerTemplate( name: "gradle", image: "gradle:4.10.0-jdk8", ttyEnabled: true,
-    containerTemplate( name: "postgres", image: "postgres:10.5")
+    containerTemplate( name: "gradle", image: "gradle:4.10.0-jdk8", ttyEnabled: true),
+    containerTemplate( name: "postgres", image: "postgres:10.5"),
     containerTemplate( name: "docker", image: "docker", command: "cat", ttyEnabled: true)
     ],
     volumes: [hostPathVolume(hostPath: '/var/run/docker.sock', mountPath: '/var/run/docker.sock')]) {
