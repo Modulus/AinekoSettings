@@ -25,7 +25,7 @@ public class SitesController {
     }
 
     @RequestMapping(value = "/site", method = RequestMethod.GET)
-    public List<Site> greeting(@RequestParam(value="name", defaultValue="World") String name) {
+    public List<Site> getSites(@RequestParam(value="name", defaultValue="World") String name) {
         return siteRepository.findAll();
     }
 
