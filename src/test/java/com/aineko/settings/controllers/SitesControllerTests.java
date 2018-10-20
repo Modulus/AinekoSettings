@@ -33,7 +33,6 @@ public class SitesControllerTests {
     public void
     sites_getWithout_id_returnsEmptyList() {
 
-
     }
 
 

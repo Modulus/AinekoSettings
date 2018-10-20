@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Collections;
@@ -20,6 +21,7 @@ import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@ActiveProfiles("default")
 public class SitesControllerTests {
 
     @Autowired
@@ -31,7 +33,6 @@ public class SitesControllerTests {
     }
 
     @Test
-    @Ignore
     public void
     sites_getWithout_id_returnsEmptyList() {
 
