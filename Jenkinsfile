@@ -22,7 +22,7 @@ podTemplate(label: label, containers : [
             }
         }
         stage("Run integration tests"){
-            container("gralde"){
+            container("gradle"){
                 sh """
                 gradle veify
                 """
