@@ -1,4 +1,4 @@
-FROM gradle:4.10.2-jdk11 as builder
+FROM gradle:4.10.2-jdk11-slim as builder
 WORKDIR /home/gradle
 COPY . /home/gradle
 CMD  gradle && gradle bootJar
