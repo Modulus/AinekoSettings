@@ -18,7 +18,7 @@ podTemplate(label: label, containers : [
             container("builder"){
                 sh """
                 apt update && apt install gradle -y
-                mkdir /home/gradle/project
+                mkdir -p /home/gradle/project
                 ls -la
                 cp `pwd` /home/gradle/project
                 cd /home/gradle/project && gradle test 
