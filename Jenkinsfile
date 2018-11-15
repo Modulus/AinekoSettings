@@ -17,7 +17,7 @@ podTemplate(label: label, containers : [
         stage('Run tests') {
             container("builder"){
                 sh """
-                apt update && apt install gradle
+                apt update && apt install gradle -y
                 mkdir /home/gradle/project
                 ls -la
                 cp `pwd` /home/gradle/project
