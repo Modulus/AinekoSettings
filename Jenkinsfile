@@ -2,7 +2,7 @@
 def label = "mypod-${UUID.randomUUID().toString()}"
 podTemplate(label: label, containers : [
     containerTemplate( name: "gradle", image: "gradle:4.10.2-jdk11", ttyEnabled: true, commant: "cat"),
-    containerTemplate( name: "postgres", image: "postgres:10.5", ports: [portMapping(name: 'posgresql', containerPort: 5432, hostPort: 5432)],  ttyEnabled: true, commant: "cat"),
+    //containerTemplate( name: "postgres", image: "postgres:10.5", ports: [portMapping(name: 'posgresql', containerPort: 5432, hostPort: 5432)],  ttyEnabled: true, commant: "cat"),
     containerTemplate( name: "docker", image: "docker")
     ],
     volumes: [hostPathVolume(hostPath: '/var/run/docker.sock', mountPath: '/var/run/docker.sock')]) {
