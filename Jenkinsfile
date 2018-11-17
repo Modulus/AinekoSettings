@@ -26,7 +26,7 @@ podTemplate(label: label, containers : [
             }
         }
         stage("Junit reports unittests"){
-            junit 'build/test-results/test/**/*report.xml'
+            junit '/home/gradle/project/build/test-results/test/**/*report.xml'
          }
 
         stage("Run integration tests"){
