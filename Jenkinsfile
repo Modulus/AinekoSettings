@@ -40,7 +40,7 @@ podTemplate(label: label, containers : [
                 gradle verify
                 """
                 sh "ls -laR"
-                junit 'build/test-results/verify/**/*report.xml'
+                junit 'build/test-results/verify/**/*.xml'
             }
         }
     
