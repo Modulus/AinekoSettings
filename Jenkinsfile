@@ -25,21 +25,25 @@ podTemplate(label: label, containers : [
                 echo 'Arhiving results from'
                 ls -laR  /home/gradle/project/build/test-results/test/
                 """
-                junit '/home/gradle/project/build/test-results/test/**/*report.xml'
+                junit '/home/gradle/project/build/test-results/test/**/*.xml'
             }
         }
 
+
         stage("Run integration tests"){
-            container("gradle"){
+            container("builder"){
                 sh """
-                gradle veify
+                apt update && apt install gradle -y
+                mkdir -p /home/gradle/project
+                ls -la
+                cd /home/gradle/project && cp -rv `pwd`/* /home/gradle/project
+                gradle verify
                 """
+                sh "ls -laR"
+                junit 'build/test-results/verify/**/*report.xml'
             }
         }
-        stage("Junit reports integration tests"){
-            sh "ls -laR"
-            junit 'build/test-results/verify/**/*report.xml'
-         }
+    
 
         /*stage("Build container"){
             container("docker"){
