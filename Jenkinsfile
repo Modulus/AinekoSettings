@@ -26,7 +26,7 @@ podTemplate(label: label, containers : [
             }
         }
         stage("Junit reports unittests"){
-            junit 'build/reports/test-results/test/**/*report.xml'
+            junit 'build/test-results/test/**/*report.xml'
          }
 
         stage("Run integration tests"){
@@ -37,7 +37,7 @@ podTemplate(label: label, containers : [
             }
         }
         stage("Junit reports integration tests"){
-            junit 'build/reports/test-results/verify/**/*report.xml'
+            junit 'build/test-results/verify/**/*report.xml'
          }
 
         /*stage("Build container"){
