@@ -22,12 +22,12 @@ podTemplate(label: label, containers : [
                 ls -la
                 cp -rv `pwd`/* /home/gradle/project
                 cd /home/gradle/project && gradle test 
+                echo 'Arhiving results from'
+                ls -laR  /home/gradle/project/build/test-results/test/
                 """
+                junit '/home/gradle/project/build/test-results/test/**/*report.xml'
             }
         }
-        stage("Junit reports unittests"){
-            junit '/home/gradle/project/build/test-results/test/**/*report.xml'
-         }
 
         stage("Run integration tests"){
             container("gradle"){
