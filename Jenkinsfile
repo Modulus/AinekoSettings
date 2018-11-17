@@ -25,7 +25,7 @@ podTemplate(label: label, containers : [
                 echo 'Arhiving results from'
                 ls -laR  /home/gradle/project/build/test-results/test/
                 """
-                junit '/home/gradle/project/build/test-results/test/**/*.xml'
+                junit '/home/gradle/project/build/test-results/test/*.xml'
             }
         }
 
