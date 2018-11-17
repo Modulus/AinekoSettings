@@ -37,6 +37,7 @@ podTemplate(label: label, containers : [
             }
         }
         stage("Junit reports integration tests"){
+            sh "ls -laR"
             junit 'build/test-results/verify/**/*report.xml'
          }
 
