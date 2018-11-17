@@ -2,8 +2,8 @@
 def label = "mypod-${UUID.randomUUID().toString()}"
 podTemplate(label: label, containers : [
    // containerTemplate( name: "gradle", image: "gradle:4.10.2-jdk11", ttyEnabled: true, command: "cat", privileged: false),
-   containerTemplate( name: "builder", image: "openjdk:11-jdk-slim", ttyEnabled: true, command: "cat", privileged: false, workDir: "/home/gradle/project"),
-    //containerTemplate( name: "postgres", image: "postgres:10.5", ports: [portMapping(name: 'posgresql', containerPort: 5432, hostPort: 5432)],  ttyEnabled: true, commant: "cat"),
+    containerTemplate( name: "builder", image: "openjdk:11-jdk-slim", ttyEnabled: true, command: "cat", privileged: false, workDir: "/home/gradle/project"),
+    containerTemplate( name: "postgres", image: "postgres:10.5", ports: [portMapping(name: 'posgresql', containerPort: 5432, hostPort: 5432)],  ttyEnabled: true, commant: "cat"),
     //containerTemplate( name: "docker", image: "docker", ttyEnabled: true, command: "cat")
     ]) {
     //,
@@ -25,6 +25,10 @@ podTemplate(label: label, containers : [
                 """
             }
         }
+        stage("Junit reports unittests"){
+            junit 'build/reports/test-results/test/**/*report.xml'
+         }
+
         stage("Run integration tests"){
             container("gradle"){
                 sh """
@@ -32,8 +36,8 @@ podTemplate(label: label, containers : [
                 """
             }
         }
-        stage("Junit reports"){
-            junit 'build/reports/tests/**/*report.xml'
+        stage("Junit reports integration tests"){
+            junit 'build/reports/test-results/verify/**/*report.xml'
          }
 
         /*stage("Build container"){
