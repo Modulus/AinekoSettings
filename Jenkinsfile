@@ -2,7 +2,7 @@
 def label = "mypod-${UUID.randomUUID().toString()}"
 podTemplate(label: label, containers : [
    // containerTemplate( name: "gradle", image: "gradle:4.10.2-jdk11", ttyEnabled: true, command: "cat", privileged: false),
-   containerTemplate( name: "builder", image: "openjdk:11-jdk-slim", ttyEnabled: true, command: "cat", privileged: false),
+   containerTemplate( name: "builder", image: "openjdk:11-jdk-slim", ttyEnabled: true, command: "cat", privileged: false, workDir: "/home/gradle/project"),
     //containerTemplate( name: "postgres", image: "postgres:10.5", ports: [portMapping(name: 'posgresql', containerPort: 5432, hostPort: 5432)],  ttyEnabled: true, commant: "cat"),
     //containerTemplate( name: "docker", image: "docker", ttyEnabled: true, command: "cat")
     ]) {
@@ -20,7 +20,7 @@ podTemplate(label: label, containers : [
                 apt update && apt install gradle -y
                 mkdir -p /home/gradle/project
                 ls -la
-                cp `pwd` /home/gradle/project
+                cp -rv `pwd`/* /home/gradle/project
                 cd /home/gradle/project && gradle test 
                 """
             }
