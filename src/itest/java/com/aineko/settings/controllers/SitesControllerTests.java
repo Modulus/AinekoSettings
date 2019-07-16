@@ -6,12 +6,15 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringBootConfiguration;
+import org.springframework.boot.test.context.ConfigFileApplicationContextInitializer;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Collections;
+import java.util.*;
 
+import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.greaterThan;
@@ -80,5 +83,20 @@ public class SitesControllerTests {
                 body("", hasSize(0));
     }
 
-}
 
+    @Test
+    public void Save_HasListOfUrls_AllUrlsSaved(){
+        List<String> urls = Arrays.asList("http://www.vg.no", "http://www.dagbladet.no", "http://vg.no");
+        Map<String, List> urlMap = new HashMap<>();
+        urlMap.put("urls", urls);
+
+        Response response =  given().body(urlMap).when()
+                .post("/sites")
+                .then()
+                .statusCode(200)
+                .body("id",  greaterThan(0))
+                .body("url", equalTo(Arrays.asList("http://www.vg.no", "http://www.dagbladet.no", "http://vg.no")))
+                .extract()
+                .response();
+    }
+}
