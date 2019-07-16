@@ -3,7 +3,6 @@ WORKDIR /home/gradle
 COPY . /home/gradle
 CMD  gradle && gradle bootJar
 
----
 
 FROM gradle:4.10.2-jdk11-slim
 COPY --from=builder /home/gradle/build/libs/settings*.jar ./settings.jar
