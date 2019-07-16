@@ -64,4 +64,22 @@ hibernate.hbm2ddl.auto: update #drop-create
 spring.profiles: production
 name: production
 environment: production
-spring.datasource.url: jdbc:postgresql://settings_db:5432/aineko
+spring:
+  datasource:
+    url: jdbc:postgresql://postgres:5432/aineko # ${DB_CONNECTION_STRING}
+    username: postgres #${DB_USER}
+    password: neverever #${DB_PASSWORD}
+  # The SQL dialect makes Hibernate generate better SQL for the chosen database
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update #create-drop
+    # Because detection is disabled you have to set correct dialect by hand.
+    database-plattform: org.hibernate.dialect.PostgreSQL9Dialect
+    properties:
+      hibernate:
+        # Disable feature detection by this undocumented parameter. Check the org.hibernate.engine.jdbc.internal.JdbcServiceImpl.configure method for more details.
+        temp.use_jdbc_metadata_defaults: false
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        # Hibernate ddl auto (create, create-drop, validate, update)
+

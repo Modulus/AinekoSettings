@@ -2,7 +2,7 @@ version: "3.3"
 services:
   postgres:
     image: postgres:10.4
-    container_name: aineko_postgres
+    container_name: postgres
     ports:
       - "5432:5432"
     environment:
@@ -17,7 +17,10 @@ services:
     networks:
       - aineko_settings_network
     environment:
-      profile: compose
+      profile: production
+      DB_CONNECTION_STRING: "jdbc:postgresql://postgres:5432/aineko?createDatabaseIfNotExist=true&useUnicode=yes&characterEncoding=UTF-8"
+      username: postgres
+      password: neverever
     ports:
       - "8090:8080"
 

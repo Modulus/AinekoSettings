@@ -21,7 +21,7 @@ apply plugin: 'io.spring.dependency-management'
 
 
 group = 'com.aineko'
-version = '0.0.1-SNAPSHOT'
+version = '1.0.0'
 sourceCompatibility = 8
 
 repositories {

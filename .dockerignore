@@ -4,3 +4,8 @@ out
 Dockerfile
 docker-compose.yml
 .bash_history
+build
+bin
+gradle
+.classpath
+.project
