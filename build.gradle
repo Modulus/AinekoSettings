@@ -22,7 +22,7 @@ apply plugin: 'io.spring.dependency-management'
 
 group = 'com.aineko'
 version = '1.0.0'
-sourceCompatibility = 8
+sourceCompatibility = 11
 
 repositories {
 	mavenCentral()
