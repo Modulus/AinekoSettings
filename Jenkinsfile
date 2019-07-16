@@ -1,11 +1,14 @@
 // this guarantees the node will use this template
 def label = "mypod-${UUID.randomUUID().toString()}"
 podTemplate(label: label, containers : [
-    containerTemplate( name: "gradle", image: "gradle:4.10.0-jdk8", command: "cat", ttyEnabled: true),
-    containerTemplate( name: "postgres", image: "postgres:10.5", ports: [portMapping(name: 'posgresql', containerPort: 5432, hostPort: 5432)]),
-    containerTemplate( name: "docker", image: "docker", command: "cat", ttyEnabled: true)
-    ],
-    volumes: [hostPathVolume(hostPath: '/var/run/docker.sock', mountPath: '/var/run/docker.sock')]) {
+
+   // containerTemplate( name: "gradle", image: "gradle:4.10.2-jdk11", ttyEnabled: true, command: "cat", privileged: false),
+    containerTemplate( name: "builder", image: "openjdk:11-jdk-slim", ttyEnabled: true, command: "cat", privileged: false, workDir: "/home/gradle/project"),
+    containerTemplate( name: "postgres", image: "postgres:10.5", ports: [portMapping(name: 'posgresql', containerPort: 5432, hostPort: 5432)],  ttyEnabled: true, commant: "cat"),
+    //containerTemplate( name: "docker", image: "docker", ttyEnabled: true, command: "cat")
+    ]) {
+    //,
+    //volumes: [hostPathVolume(hostPath: '/var/run/docker.sock', mountPath: '/var/run/docker.sock')]) {
 
     node(label) {
        def repo = checkout scm
@@ -13,32 +16,43 @@ podTemplate(label: label, containers : [
        def gitBranch = repo.GIT_BRANCH
        def versionNumber = gitCommit.substring(0,10)
         stage('Run tests') {
-            container("gradle"){
+            container("builder"){
                 sh """
+                apt update && apt install gradle -y
+                mkdir -p /home/gradle/project
                 ls -la
-                cp `pwd` /home/gradle/project
+                cp -rv `pwd`/* /home/gradle/project
                 cd /home/gradle/project && gradle test 
+                echo 'Arhiving results from'
+                ls -laR  /home/gradle/project/build/test-results/test/
                 """
+                junit '/home/gradle/project/build/test-results/test/*.xml'
             }
         }
-        stage("Run integration tests"){
-            container("gralde"){
-                sh """
-                gradle veify
-                """
-            }
-        }
-        stage("Junit reports"){
-            junit 'build/reports/tests/**/*report.xml'
-         }
 
-        stage("Build container"){
+
+        stage("Run integration tests"){
+            container("builder"){
+                sh """
+                apt update && apt install gradle -y
+                mkdir -p /home/gradle/project
+                ls -la
+                cd /home/gradle/project && cp -rv `pwd`/* /home/gradle/project
+                gradle verify
+                """
+                sh "ls -laR"
+                junit 'build/test-results/verify/**/*.xml'
+            }
+        }
+    
+
+        /*stage("Build container"){
             container("docker"){
                 docker.withRegistry("https://registry.hub.docker.com", "dockerhub"){
                     def builtImage = docker.build("rubblesnask/aineko-settings:1.${versionNumber}-${env.BRANCH_NAME}")
                     builtImage.push()
                 }
             }
-        }
+        }*/
     }
 }
