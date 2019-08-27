@@ -66,9 +66,9 @@ name: production
 environment: production
 spring:
   datasource:
-    url: ${DB_CONNECTION_STRING} #jdbc:postgresql://postgres:5432/aineko #
-    username:  ${DB_USER} #postgres
-    password:  ${DB_PASSWORD} #neverever
+    url: "${DB_CONNECTION_STRING}"
+    username:  "${DB_USER}"
+    password:  "${DB_PASSWORD}"
   # The SQL dialect makes Hibernate generate better SQL for the chosen database
   jpa:
     show-sql: true
